@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipewright — Messy In, Clean Out</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; background: #f6f7f9; color: #1c2333; }
+  header { background: #14324f; color: #fff; padding: 28px 22px; }
+  header h1 { margin: 0; font-size: 30px; }
+  header p { margin: 6px 0 0; opacity: .85; }
+  main { max-width: 880px; margin: 0 auto; padding: 18px; }
+  .steps { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin: 18px 0 6px; }
+  .step { padding: 8px 12px; border-radius: 8px; color: #fff; font-weight: 600; font-size: 14px; }
+  .s1 { background: #2e6da4; } .s2 { background: #d97706; } .s3 { background: #7c3aed; }
+  .s4 { background: #059669; } .s5 { background: #be3455; } .s6 { background: #334155; }
+  .arrow { color: #8a94a6; font-weight: 700; }
+  .card { background: #fff; border: 1px solid #e2e6ee; border-radius: 12px; padding: 18px; margin: 16px 0; }
+  .card h2 { margin: 0 0 4px; font-size: 20px; }
+  .card .sub { color: #5b6577; margin: 0 0 12px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+  .stat { background: #f0f3f8; border-radius: 8px; padding: 8px 12px; }
+  .stat b { display: block; font-size: 18px; }
+  .stat span { font-size: 12px; color: #5b6577; }
+  table { border-collapse: collapse; margin: 8px 0; }
+  td, th { border: 1px solid #e2e6ee; padding: 5px 10px; font-size: 14px; text-align: left; }
+  .ok { color: #059669; font-weight: 700; }
+  footer { color: #5b6577; font-size: 13px; padding: 10px 22px 30px; max-width: 880px; margin: 0 auto; }
+</style></head><body>
+<header><h1>Pipewright</h1><p>Messy In, Clean Out. One pipeline pattern, three levels of data.</p></header>
+<main>
+  <div class="steps"><div class="step s1">Extract</div><div class="arrow">&#8594;</div><div class="step s2">Clean</div><div class="arrow">&#8594;</div><div class="step s3">Transform</div><div class="arrow">&#8594;</div><div class="step s4">Analyze</div><div class="arrow">&#8594;</div><div class="step s5">Load</div><div class="arrow">&#8594;</div><div class="step s6">Automate</div></div>
+  <p>Every level runs the same six steps. The pattern never changes; the data grows.</p>
+
+  <div class="card"><h2>Level 1 — Students (teaching)</h2>
+  <p class="sub">A small file, deliberately messy, checkable by eye.</p>
+  <div class="stats">
+    <div class="stat"><b>62</b><span>rows in</span></div>
+    <div class="stat"><b>60</b><span>rows out</span></div>
+    <div class="stat"><b>2</b><span>duplicates removed</span></div>
+    <div class="stat"><b>3</b><span>impossible values caught</span></div>
+    <div class="stat"><b>7</b><span>gaps filled</span></div>
+  </div>
+  <p><b>Average exam score by attendance band</b></p>
+  <table><tr><th>Attendance</th><th>Average score</th></tr><tr><td>Low</td><td>39.9</td></tr><tr><td>Mid</td><td>69.2</td></tr><tr><td>High</td><td>74.4</td></tr></table>
+  <p>Study hours tracked the score most closely (correlation 0.88),
+     attendance next (0.79).</p></div>
+
+  <div class="card"><h2>Level 2 — Maintenance parts (business)</h2>
+  <p class="sub">A parts master plus receipts and issues files that must join and reconcile.</p>
+  <div class="stats">
+    <div class="stat"><b>120</b><span>parts in master</span></div>
+    <div class="stat"><b>3,379</b><span>movement rows used</span></div>
+    <div class="stat"><b>66</b><span>rows quarantined</span></div>
+    <div class="stat"><b>48</b><span>parts in negative stock</span></div>
+  </div>
+  <p>Reconciliation: 36,601 received &minus; 35,252 issued
+     = 1,349 &mdash; matches the sum of every part's stock position.
+     <span class="ok">Reconciles: YES</span></p>
+  <p><b>Worst negative stock</b> (issued more than was ever received — a data problem, flagged, not hidden)</p>
+  <table><tr><th>Part</th><th>Position</th></tr><tr><td>PN-1007</td><td>-499</td></tr><tr><td>PN-1097</td><td>-480</td></tr><tr><td>PN-1021</td><td>-473</td></tr><tr><td>PN-1025</td><td>-385</td></tr><tr><td>PN-1062</td><td>-359</td></tr></table>
+  <p><b>Why rows were quarantined</b></p>
+  <table><tr><th>Reason</th><th>Rows</th></tr><tr><td>part not in the parts master</td><td>45</td></tr><tr><td>quantity missing, not a number, or not positive</td><td>21</td></tr></table></div>
+
+  <div class="card"><h2>Level 3 — Event logs (operations)</h2>
+  <p class="sub">Fourteen daily files, processed in order, with a run report for the fortnight.</p>
+  <div class="stats">
+    <div class="stat"><b>559</b><span>events accepted</span></div>
+    <div class="stat"><b>5</b><span>events rejected</span></div>
+    <div class="stat"><b>3</b><span>duplicates removed</span></div>
+    <div class="stat"><b>139</b><span>work orders opened</span></div>
+    <div class="stat"><b>103</b><span>work orders closed</span></div>
+    <div class="stat"><b>9</b><span>assets with work still open</span></div>
+  </div>
+  <p><b>Why events were rejected</b></p>
+  <table><tr><th>Reason</th><th>Events</th></tr><tr><td>unknown event type</td><td>2</td></tr><tr><td>part used with no work order recorded</td><td>2</td></tr><tr><td>missing timestamp</td><td>1</td></tr></table></div>
+</main>
+<footer>All data on this page is synthetic, generated for the project. Every number
+comes from an actual pipeline run; the run reports sit next to the outputs that produced them.</footer>
+</body></html>
