@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pipewright — Interactive Demo</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0; background: #f6f7f9; color: #1c2333; }
+  header { background: #14324f; color: #fff; padding: 24px 22px; }
+  header h1 { margin: 0; font-size: 28px; }
+  header p { margin: 6px 0 0; opacity: .85; }
+  main { max-width: 880px; margin: 0 auto; padding: 18px; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 6px 0 14px; }
+  .tab { border: 2px solid #14324f; background: #fff; color: #14324f; border-radius: 999px; padding: 8px 16px; font-weight: 700; cursor: pointer; font-size: 15px; }
+  .tab.on { background: #14324f; color: #fff; }
+  .steps { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin: 10px 0; }
+  .step { padding: 8px 12px; border-radius: 8px; color: #fff; font-weight: 600; font-size: 14px; opacity: .35; cursor: pointer; border: none; }
+  .step.on { opacity: 1; outline: 3px solid #1c2333; }
+  .step.done { opacity: .75; }
+  .s1 { background: #2e6da4; } .s2 { background: #d97706; } .s3 { background: #7c3aed; }
+  .s4 { background: #059669; } .s5 { background: #be3455; } .s6 { background: #334155; }
+  .arrow { color: #8a94a6; font-weight: 700; }
+  .panel { background: #fff; border: 1px solid #e2e6ee; border-radius: 12px; padding: 18px; min-height: 300px; }
+  .panel h2 { margin: 0 0 6px; font-size: 21px; }
+  .panel .plain { color: #374151; line-height: 1.45; }
+  table { border-collapse: collapse; margin: 10px 0; }
+  td, th { border: 1px solid #e2e6ee; padding: 5px 10px; font-size: 14px; text-align: left; }
+  .nav { display: flex; gap: 10px; margin: 14px 0; }
+  .nav button { border: none; border-radius: 8px; padding: 10px 18px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  #prev { background: #e2e6ee; color: #1c2333; }
+  #next { background: #14324f; color: #fff; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
+  .bar-label { width: 110px; font-size: 14px; }
+  .bar-track { flex: 1; background: #eef1f6; border-radius: 6px; height: 22px; }
+  .bar-fill { height: 22px; border-radius: 6px; background: #059669; }
+  .bar-val { width: 48px; font-weight: 700; }
+  .recon { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 12px 0; font-size: 17px; }
+  .recon .box { background: #f0f3f8; border-radius: 8px; padding: 10px 14px; font-weight: 700; }
+  .ok { color: #059669; font-weight: 800; }
+  .stat { display: inline-block; background: #f0f3f8; border-radius: 8px; padding: 8px 12px; margin: 4px 4px 4px 0; }
+  .stat b { font-size: 17px; }
+  .stat span { font-size: 12px; color: #5b6577; display: block; }
+  footer { color: #5b6577; font-size: 13px; padding: 8px 22px 28px; max-width: 880px; margin: 0 auto; }
+</style></head><body>
+<header><h1>Pipewright — Interactive Demo</h1>
+<p>Messy In, Clean Out. Pick a level, then walk the six steps and watch the data change.</p></header>
+<main>
+  <div class="tabs" id="tabs"></div>
+  <div class="steps" id="steps"></div>
+  <div class="panel" id="panel"></div>
+  <div class="nav">
+    <button id="prev">&#8592; Previous step</button>
+    <button id="next">Next step &#8594;</button>
+  </div>
+</main>
+<footer>Every row and number in this demo comes from an actual Pipewright run on synthetic data.
+Nothing here is typed in by hand.</footer>
+<script>
+const DATA = {"l1": {"report": {"level": 1, "name": "Students (teaching)", "rows_in": 62, "duplicates_removed": 2, "impossible_values_removed": 3, "gaps_filled_with_median": 7, "rows_out": 60, "avg_score_by_attendance": {"Low": 39.9, "Mid": 69.2, "High": 74.4}, "correlation_study_hours": 0.88, "correlation_attendance": 0.79}, "pairs": [{"id": "S006", "before": "2.7 hrs | 69% | (blank)", "after": "2.7 hrs | 69.0% | 60"}, {"id": "S013", "before": "(blank) | 72% | 73", "after": "5.6 hrs | 72.0% | 73"}, {"id": "S021", "before": "10.5 hrs | abc% | 83", "after": "10.5 hrs | 67.5% | 83"}, {"id": "S054", "before": "11.7 hrs | 97% | 103", "after": "11.7 hrs | 97.0% | 60"}, {"id": "S058", "before": "11.8 hrs | 101% | 103", "after": "11.8 hrs | 67.5% | 60"}]}, "l2": {"report": {"level": 2, "name": "Maintenance parts (business)", "master_rows_in": 123, "master_parts": 120, "master_duplicates_removed": 3, "receipts_rows_in": 1825, "receipts_rows_used": 1788, "issues_rows_in": 1620, "issues_rows_used": 1591, "total_received": 36601, "total_issued": 35252, "stock_position_sum": 1349, "reconciles": true, "negative_stock_parts": 48, "worst_negative": [{"part_id": "PN-1007", "position": -499}, {"part_id": "PN-1097", "position": -480}, {"part_id": "PN-1021", "position": -473}, {"part_id": "PN-1025", "position": -385}, {"part_id": "PN-1062", "position": -359}], "parts_with_no_movement": 0, "stock_value_total": 3078193.55, "quarantined_rows": 66}, "variants": [{"form": "PN-1001", "key": "PN-1001"}, {"form": "PN1001", "key": "PN-1001"}, {"form": "pn-1001", "key": "PN-1001"}], "quarantine": [{"part": "PN-1020", "qty": "-1", "reason": "quantity missing, not a number, or not positive"}, {"part": "PN1031", "qty": "-2", "reason": "quantity missing, not a number, or not positive"}, {"part": "PN1065", "qty": "-3", "reason": "quantity missing, not a number, or not positive"}, {"part": "PN-1036", "qty": "-6", "reason": "quantity missing, not a number, or not positive"}, {"part": "PN1057", "qty": "-6", "reason": "quantity missing, not a number, or not positive"}], "negative": [{"part": "PN-1007", "desc": "belt HD", "received": 345, "issued": 844, "position": -499}, {"part": "PN-1097", "desc": "pump rotor pro", "received": 197, "issued": 677, "position": -480}, {"part": "PN-1021", "desc": "relay LP", "received": 360, "issued": 833, "position": -473}, {"part": "PN-1025", "desc": "o-ring set X2", "received": 321, "issued": 706, "position": -385}, {"part": "PN-1062", "desc": "actuator pro", "received": 329, "issued": 688, "position": -359}]}, "l3": {"report": {"level": 3, "name": "Maintenance event logs (operations)", "days": [{"file": "day01.csv", "rows_in": 42, "duplicates_removed": 0, "rows_accepted": 42, "rows_rejected": 0}, {"file": "day02.csv", "rows_in": 46, "duplicates_removed": 0, "rows_accepted": 46, "rows_rejected": 0}, {"file": "day03.csv", "rows_in": 44, "duplicates_removed": 1, "rows_accepted": 43, "rows_rejected": 0}, {"file": "day04.csv", "rows_in": 37, "duplicates_removed": 0, "rows_accepted": 37, "rows_rejected": 0}, {"file": "day05.csv", "rows_in": 39, "duplicates_removed": 0, "rows_accepted": 38, "rows_rejected": 1}, {"file": "day06.csv", "rows_in": 43, "duplicates_removed": 0, "rows_accepted": 42, "rows_rejected": 1}, {"file": "day07.csv", "rows_in": 30, "duplicates_removed": 0, "rows_accepted": 30, "rows_rejected": 0}, {"file": "day08.csv", "rows_in": 33, "duplicates_removed": 1, "rows_accepted": 32, "rows_rejected": 0}, {"file": "day09.csv", "rows_in": 37, "duplicates_removed": 0, "rows_accepted": 36, "rows_rejected": 1}, {"file": "day10.csv", "rows_in": 47, "duplicates_removed": 0, "rows_accepted": 46, "rows_rejected": 1}, {"file": "day11.csv", "rows_in": 44, "duplicates_removed": 0, "rows_accepted": 44, "rows_rejected": 0}, {"file": "day12.csv", "rows_in": 40, "duplicates_removed": 1, "rows_accepted": 39, "rows_rejected": 0}, {"file": "day13.csv", "rows_in": 44, "duplicates_removed": 0, "rows_accepted": 43, "rows_rejected": 1}, {"file": "day14.csv", "rows_in": 41, "duplicates_removed": 0, "rows_accepted": 41, "rows_rejected": 0}], "events_accepted": 559, "events_rejected": 5, "duplicates_removed": 3, "work_orders_opened": 139, "work_orders_closed": 103, "parts_used_events": 157, "assets_with_open_work": 9}, "quarantine": [{"file": "day05.csv", "type": "PING", "reason": "unknown event type"}, {"file": "day06.csv", "type": "PART_USED", "reason": "part used with no work order recorded"}, {"file": "day09.csv", "type": "INSPECT", "reason": "missing timestamp"}, {"file": "day10.csv", "type": "PING", "reason": "unknown event type"}, {"file": "day13.csv", "type": "PART_USED", "reason": "part used with no work order recorded"}], "days": [{"file": "day01.csv", "in": 42, "accepted": 42, "rejected": 0, "dupes": 0}, {"file": "day02.csv", "in": 46, "accepted": 46, "rejected": 0, "dupes": 0}, {"file": "day03.csv", "in": 44, "accepted": 43, "rejected": 0, "dupes": 1}, {"file": "day04.csv", "in": 37, "accepted": 37, "rejected": 0, "dupes": 0}, {"file": "day05.csv", "in": 39, "accepted": 38, "rejected": 1, "dupes": 0}, {"file": "day06.csv", "in": 43, "accepted": 42, "rejected": 1, "dupes": 0}, {"file": "day07.csv", "in": 30, "accepted": 30, "rejected": 0, "dupes": 0}, {"file": "day08.csv", "in": 33, "accepted": 32, "rejected": 0, "dupes": 1}, {"file": "day09.csv", "in": 37, "accepted": 36, "rejected": 1, "dupes": 0}, {"file": "day10.csv", "in": 47, "accepted": 46, "rejected": 1, "dupes": 0}, {"file": "day11.csv", "in": 44, "accepted": 44, "rejected": 0, "dupes": 0}, {"file": "day12.csv", "in": 40, "accepted": 39, "rejected": 0, "dupes": 1}, {"file": "day13.csv", "in": 44, "accepted": 43, "rejected": 1, "dupes": 0}, {"file": "day14.csv", "in": 41, "accepted": 41, "rejected": 0, "dupes": 0}]}};
+const STEPS = ["Extract", "Clean", "Transform", "Analyze", "Load", "Automate"];
+const LEVELS = [
+  { id: "l1", name: "Level 1 — Students" },
+  { id: "l2", name: "Level 2 — Maintenance parts" },
+  { id: "l3", name: "Level 3 — Event logs" }
+];
+let level = "l1", step = 0;
+
+function stats(items) {
+  return items.map(([b, s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
+}
+function table(head, rows) {
+  return `<table><tr>${head.map(h => `<th>${h}</th>`).join("")}</tr>` +
+    rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("") + "</table>";
+}
+
+const CONTENT = {
+l1: [
+  () => { const r = DATA.l1.report; return `<h2>Extract — the file as it arrived</h2>
+    <p class="plain">No fixing, no judging. Load the file and look at it honestly.
+    This one has text inside the numbers, a missing score, and one score of 118 out of 100.</p>
+    ${stats([[r.rows_in, "rows loaded"]])}
+    ${table(["Student", "As it arrived (hours | attendance | score)"], DATA.l1.pairs.map(p => [p.id, p.before]))}`; },
+  () => { const r = DATA.l1.report; return `<h2>Clean — fix what is fixable</h2>
+    <p class="plain">Strip the decoration out of the numbers, remove the duplicates,
+    catch the impossible values, fill the gaps with the middle value (the median).</p>
+    ${stats([[r.duplicates_removed, "duplicates removed"], [r.impossible_values_removed, "impossible values caught"], [r.gaps_filled_with_median, "gaps filled"]])}
+    ${table(["Student", "Before", "After"], DATA.l1.pairs.map(p => [p.id, p.before, p.after]))}`; },
+  () => { const r = DATA.l1.report; return `<h2>Transform — groupings a reader can act on</h2>
+    <p class="plain">Scores become grade groups: Needs Improvement (under 50), Good (50–79),
+    Excellent (80–100). Attendance becomes bands: Low (under 60%), Mid (60–84%), High (85%+).
+    Same data, now shaped for a question.</p>
+    ${stats([[r.rows_out, "rows, reshaped"]])}`; },
+  () => { const a = DATA.l1.report.avg_score_by_attendance; return `<h2>Analyze — does attendance track the score?</h2>
+    <p class="plain">Average exam score by attendance band:</p>
+    ${["Low", "Mid", "High"].map(k => `<div class="bar-row"><div class="bar-label">${k} attendance</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${a[k]}%"></div></div>
+      <div class="bar-val">${a[k]}</div></div>`).join("")}
+    <p class="plain">And study hours tracked the score even more closely
+    (correlation ${DATA.l1.report.correlation_study_hours}) than attendance (${DATA.l1.report.correlation_attendance}).</p>`; },
+  () => `<h2>Load — saved, with its report</h2>
+    <p class="plain">Three files land in <b>output/level1/</b>: the cleaned data
+    (students_clean.csv), the summary (summary.csv), and the run report (run_report.json) —
+    rows in, rows out, and every fix counted. The report is part of the load, not an afterthought.</p>`,
+  () => `<h2>Automate — one function, ready to schedule</h2>
+    <p class="plain">The whole level is a single function, run_pipeline(). A scheduler can call it
+    whenever a new file lands, and the run report proves what it did. That is the demo you are
+    looking at: this page was built from those reports.</p>`
+],
+l2: [
+  () => { const r = DATA.l2.report; return `<h2>Extract — three files that belong together</h2>
+    <p class="plain">A parts master, a receipts file (stock in) and an issues file (stock out).
+    Three sources, one truth they are supposed to agree on.</p>
+    ${stats([[r.master_rows_in, "master rows"], [r.receipts_rows_in.toLocaleString(), "receipt rows"], [r.issues_rows_in.toLocaleString(), "issue rows"]])}`; },
+  () => { const r = DATA.l2.report; return `<h2>Clean — first, make the names match</h2>
+    <p class="plain">The same part arrived written several different ways, and until the codes
+    are normalised into one canonical form, the files cannot join at all. Watch one part:</p>
+    ${table(["As written in the files", "Canonical code"], DATA.l2.variants.map(v => [v.form, v.key]))}
+    ${stats([[r.master_duplicates_removed, "duplicate master rows removed"], [r.quarantined_rows, "movement rows quarantined, with reasons"]])}`; },
+  () => { const r = DATA.l2.report; return `<h2>Transform — one row per part</h2>
+    <p class="plain">Receipts and issues join onto the master. Every part gets one row:
+    what it is, what came in, what went out, and what should be on the shelf.</p>
+    ${stats([[r.master_parts, "parts, one row each"], [(r.receipts_rows_used + r.issues_rows_used).toLocaleString(), "movement rows joined"]])}`; },
+  () => { const r = DATA.l2.report; return `<h2>Analyze — and reconcile, to the unit</h2>
+    <div class="recon"><div class="box">${r.total_received.toLocaleString()} received</div> &minus;
+    <div class="box">${r.total_issued.toLocaleString()} issued</div> =
+    <div class="box">${r.stock_position_sum.toLocaleString()}</div>
+    <span class="ok">matches the sum of every part's position &#10003;</span></div>
+    <p class="plain">Two different paths to the same number — that is the pipeline proving its own
+    arithmetic. It also flags the parts where the data disagrees with itself:</p>
+    ${table(["Part", "Description", "Received", "Issued", "Position"], DATA.l2.negative.map(n => [n.part, n.desc, n.received, n.issued, n.position]))}
+    <p class="plain">${r.negative_stock_parts} parts sit in negative stock — more issued than ever
+    received. A data problem, flagged in the open, not averaged away.</p>`; },
+  () => `<h2>Load — including the quarantine file</h2>
+    <p class="plain">Saved to <b>output/level2/</b>: the stock position for every part, the run
+    report, and quarantine.csv — every row that was set aside, with its reason. A sample:</p>
+    ${table(["Part as written", "Qty", "Reason"], DATA.l2.quarantine.map(q => [q.part, q.qty, q.reason]))}`,
+  () => `<h2>Automate — the same shape, bigger data</h2>
+    <p class="plain">Nothing about the six steps changed from Level 1. The data got bigger and
+    meaner, and the pattern held: extract honestly, clean openly, quarantine with reasons,
+    reconcile before trusting the answer.</p>`
+],
+l3: [
+  () => { const r = DATA.l3.report; return `<h2>Extract — one file a day, for fourteen days</h2>
+    <p class="plain">Maintenance event logs, dropped daily, rows in no particular order.
+    The pipeline takes them in date order and keeps a running picture.</p>
+    ${stats([["14", "daily files"], [r.events_accepted + r.events_rejected + r.duplicates_removed, "events arrived"]])}`; },
+  () => { const r = DATA.l3.report; return `<h2>Clean — duplicates out, the unusable set aside</h2>
+    ${stats([[r.duplicates_removed, "exact duplicates removed"], [r.events_rejected, "events rejected, each with a reason"]])}
+    ${table(["File", "Event type", "Reason"], DATA.l3.quarantine.map(q => [q.file, q.type, q.reason]))}
+    <p class="plain">A part fitted with no work order recorded is not a small thing in maintenance.
+    It gets rejected and reported, not waved through.</p>`; },
+  () => `<h2>Transform — a timeline per asset</h2>
+    <p class="plain">Accepted events are sorted into one timeline, then grouped by asset:
+    what opened, what closed, what was fitted, what was inspected.</p>
+    ${table(["Day file", "In", "Accepted", "Rejected", "Duplicates"], DATA.l3.days.map(d => [d.file, d.in, d.accepted, d.rejected, d.dupes]))}`,
+  () => { const r = DATA.l3.report; return `<h2>Analyze — what is still open?</h2>
+    ${stats([[r.work_orders_opened, "work orders opened"], [r.work_orders_closed, "work orders closed"], [r.parts_used_events, "parts fitted"], [r.assets_with_open_work, "assets with work still open"]])}
+    <p class="plain">Opened minus closed is the live workload. Nine assets still hold open work
+    at the end of the fortnight — that is the number a maintenance lead reads first.</p>`; },
+  () => `<h2>Load — the fortnight, filed</h2>
+    <p class="plain">Saved to <b>output/level3/</b>: the clean event timeline, a summary per
+    asset, the quarantine file, and the run report covering all fourteen days, day by day.</p>`,
+  () => `<h2>Automate — built for the daily drop</h2>
+    <p class="plain">This is the level that earns the schedule: a new file lands, the pipeline
+    runs, the report files itself. If a day ever arrives with a new kind of mess, the report
+    shows it the same morning, in the open.</p>`
+]
+};
+
+function render() {
+  document.getElementById("tabs").innerHTML = LEVELS.map(l =>
+    `<button class="tab ${l.id === level ? "on" : ""}" data-level="${l.id}">${l.name}</button>`).join("");
+  document.getElementById("steps").innerHTML = STEPS.map((s, i) =>
+    `<button class="step s${i + 1} ${i === step ? "on" : i < step ? "done" : ""}" data-step="${i}">${s}</button>` +
+    (i < 5 ? '<span class="arrow">&#8594;</span>' : "")).join("");
+  document.getElementById("panel").innerHTML = CONTENT[level][step]();
+  document.getElementById("prev").disabled = step === 0;
+  document.getElementById("next").disabled = step === 5;
+  document.querySelectorAll(".tab").forEach(b => b.onclick = () => { level = b.dataset.level; step = 0; render(); });
+  document.querySelectorAll(".step").forEach(b => b.onclick = () => { step = +b.dataset.step; render(); });
+}
+document.getElementById("prev").onclick = () => { if (step > 0) { step--; render(); } };
+document.getElementById("next").onclick = () => { if (step < 5) { step++; render(); } };
+render();
+</script>
+</body></html>
