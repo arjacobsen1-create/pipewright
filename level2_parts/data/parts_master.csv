@@ -1,0 +1,124 @@
+part_id,description,uom,unit_cost,criticality
+PN-1001,filter std,set,250.43,B
+PN-1002,valve std,set,667.64,C
+PN-1003,gasket pro,EA,32.48,A
+PN-1004,motor brush HD,SET,543.41,C
+PN-1005,motor brush pro,EA,201.51,C
+PN-1006,belt std,ea,629.53,C
+PN-1007,belt HD,ea,861.66,C
+PN-1008,filter std,EA,90.66,C
+PN-1009,nozzle LP,EA,657.84,C
+PN-1010,filter X2,EA,498.63,C
+PN-1011,hose pro,ea,635.3,A
+PN-1012,coupling LP,EA,770.36,A
+PN-1013,o-ring set LP,EA,573.57,C
+PN-1014,pump rotor LP,Each,191.72,C
+PN-1015,gasket pro,set,157.34,B
+PN-1016,pump rotor X2,EA,245.87,C
+PN-1017,coupling LP,EA,209.23,A
+PN-1018,switch X2,Each,63.3,C
+PN-1019,switch HD,set,451.31,B
+PN-1020,valve LP,ea,224.98,C
+PN-1021,relay LP,set,527.79,C
+PN-1022,o-ring set LP,ea,897.6,B
+PN-1023,fuse pack X2,EA,681.18,A
+PN-1024,valve HD,set,382.26,A
+PN-1025,o-ring set X2,SET,896.52,C
+PN-1026,belt pro,EA,613.53,A
+PN-1027,relay LP,set,308.8,C
+PN-1028,impeller HD,EA,6.91,C
+PN-1029,fuse pack HD,SET,821.71,C
+PN-1030,fuse pack pro,ea,140.94,B
+PN-1031,relay pro,EA,540.65,B
+PN-1032,bearing std,Each,791.33,C
+PN-1033,coupling std,ea,790.7,A
+PN-1034,gasket X2,EA,880.27,C
+PN-1035,valve HD,set,429.85,C
+PN-1036,pump rotor LP,SET,785.7,B
+PN-1037,motor brush pro,set,622.12,C
+PN-1038,o-ring set LP,EA,810.05,B
+PN-1039,filter HD,ea,61.37,A
+PN-1040,actuator pro,ea,531.24,A
+PN-1041,gasket std,ea,64.39,A
+PN-1042,switch std,SET,217.25,B
+PN-1043,motor brush pro,ea,652.12,C
+PN-1044,actuator X2,ea,707.02,B
+PN-1045,motor brush std,EA,594.45,C
+PN-1046,impeller X2,EA,778.0,A
+PN-1047,filter std,EA,656.48,A
+PN-1048,coupling HD,ea,484.51,B
+PN-1049,impeller HD,Each,418.51,A
+PN-1050,shaft pro,EA,49.33,C
+PN-1051,bearing std,ea,153.01,B
+PN-1052,gear HD,EA,812.59,B
+PN-1053,o-ring set std,EA,241.62,B
+PN-1054,sensor X2,set,861.76,C
+PN-1055,gear HD,ea,269.85,A
+PN-1056,actuator pro,EA,674.19,A
+PN-1057,seal kit pro,EA,454.55,C
+PN-1058,pump rotor std,SET,75.78,B
+PN-1059,gasket pro,EA,608.99,B
+PN-1060,o-ring set std,SET,224.61,C
+PN-1061,seal kit pro,EA,379.63,C
+PN-1062,actuator pro,Each,841.5,B
+PN-1063,switch HD,Each,358.62,C
+PN-1064,shaft LP,EA,12.35,C
+PN-1065,actuator std,EA,485.72,C
+PN-1066,belt HD,Each,793.25,B
+PN-1067,hose LP,ea,396.61,C
+PN-1068,sensor pro,set,477.93,C
+PN-1069,sensor std,ea,240.96,A
+PN-1070,relay HD,Each,256.45,B
+PN-1071,switch HD,set,572.28,C
+PN-1072,fuse pack X2,Each,815.18,A
+PN-1073,gasket X2,Each,43.5,C
+PN-1074,valve LP,ea,668.14,C
+PN-1075,impeller pro,EA,104.24,B
+PN-1076,relay std,Each,525.93,B
+PN-1077,impeller HD,EA,280.2,A
+PN-1078,hose HD,set,227.58,A
+PN-1079,hose pro,EA,876.56,B
+PN-1080,coupling HD,ea,793.75,A
+PN-1081,pump rotor LP,EA,722.8,B
+PN-1082,belt HD,set,100.85,A
+PN-1083,gear HD,ea,735.66,B
+PN-1084,hose LP,ea,203.74,B
+PN-1085,o-ring set LP,Each,778.46,C
+PN-1086,hose pro,EA,612.85,C
+PN-1087,switch std,EA,789.83,C
+PN-1088,pump rotor pro,Each,38.28,C
+PN-1089,impeller LP,set,708.64,B
+PN-1090,nozzle pro,EA,349.14,C
+PN-1091,motor brush LP,EA,639.07,A
+PN-1092,fuse pack pro,set,648.61,B
+PN-1093,hose X2,EA,854.19,C
+PN-1094,nozzle LP,set,763.82,C
+PN-1095,fuse pack LP,set,369.92,B
+PN-1096,sensor pro,ea,175.89,B
+PN-1097,pump rotor pro,SET,273.65,C
+PN-1098,bearing LP,Each,192.32,C
+PN-1099,nozzle LP,EA,399.84,B
+PN-1100,fuse pack X2,set,156.04,A
+PN-1101,sensor pro,set,571.12,C
+PN-1102,gasket HD,set,282.14,B
+PN-1103,valve std,EA,223.38,B
+PN-1104,nozzle std,EA,375.34,C
+PN-1105,motor brush X2,EA,362.09,B
+PN-1106,bearing std,EA,200.08,C
+PN-1107,shaft std,SET,227.28,A
+PN-1108,shaft HD,EA,602.15,C
+PN-1109,nozzle LP,EA,552.94,C
+PN-1110,impeller pro,EA,807.9,B
+PN-1111,shaft LP,ea,756.52,C
+PN-1112,fuse pack X2,set,218.36,B
+PN-1113,gasket LP,ea,247.46,C
+PN-1114,relay std,ea,139.14,B
+PN-1115,valve HD,EA,375.72,C
+PN-1116,relay X2,EA,59.79,B
+PN-1117,o-ring set pro,set,21.5,C
+PN-1118,o-ring set X2,EA,848.7,C
+PN-1119,o-ring set X2,SET,673.77,C
+PN-1120,nozzle HD,EA,200.6,B
+PN-1008,filter std,EA,90.66,C
+PN-1008,filter std,EA,90.66,C
+PN-1041,gasket std,ea,89.39,A
