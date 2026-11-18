@@ -1,6 +1,7 @@
 # Pipewright
 
 **Messy In, Clean Out.**
+**Live demo:** [Interactive demo](https://arjacobsen1-create.github.io/pipewright/demo/demo.html) · [Dashboard](https://arjacobsen1-create.github.io/pipewright/dashboard/)
 
 A data pipeline project that teaches, by building, how a data pipeline
 actually works: messy data in at one end, clean data and answers out at
